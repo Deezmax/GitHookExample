@@ -1,23 +1,37 @@
-#!/bin/sh
+#!/bin/bash
 
-checkExitCondition() {
-  if [[ $VAR != 0 ]]
-  then
-    echo "1"
-  else
-    echo "0"
-  fi
-}
+PYTHONVERSION=$(python -V)
 
-if [[ "$(python3 -V)" =~ "Python 3" ]];
-then
-  echo "$(python3 -V) is installed"
-  python3 prepare-commit-msg.py
-  exit "$(checkExitCondition $?)"
-  goto
-elif [[ "$(python -V)" =~ "Python" ]];
-then
+case $PYTHONVERSION in
+  *3.*)
   echo "$(python -V) is installed"
-else
-  exit 1
-fi
+  chmod +x .git/hooks/prepare-commit-msg.py
+  python .git/hooks/prepare-commit-msg.py
+  result=$?
+  ;;
+  *2.*)
+  echo "$(python -V) is installed"
+  chmod +x .git/hooks/prepare-commit-msg.py
+  python .git/hooks/prepare-commit-msg.py
+  result=$?
+  ;;
+  *)
+  echo "NO PYTHON DETECTED"
+  ;;
+esac
+
+echo "$result"
+#echo "Press something to exit"
+#read -r junk
+
+case $result in
+  0)
+    exit 0
+    ;;
+  1)
+    exit 1
+    ;;
+  *)
+    exit 2
+    ;;
+esac

@@ -1,4 +1,5 @@
 import sys
 
 if __name__ == '__main__':
-    sys.exit(10)
+    sys.stdout.writelines("SUCCESS\n")
+    sys.exit(1)
