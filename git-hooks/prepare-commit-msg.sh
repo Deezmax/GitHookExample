@@ -3,16 +3,10 @@
 PYTHONVERSION=$(python -V)
 
 case $PYTHONVERSION in
-  *3.*)
+  Python*3.*)
   echo "$(python -V) is installed"
-  chmod +x .git/hooks/prepare-commit-msg.py
-  python .git/hooks/prepare-commit-msg.py
-  result=$?
-  ;;
-  *2.*)
-  echo "$(python -V) is installed"
-  chmod +x .git/hooks/prepare-commit-msg.py
-  python .git/hooks/prepare-commit-msg.py
+  chmod +x Python/prepare-commit-msg.py
+  python .git/hooks/PythonScripts/prepare-commit-msg.py "$1" "$2" "$3"
   result=$?
   ;;
   *)
