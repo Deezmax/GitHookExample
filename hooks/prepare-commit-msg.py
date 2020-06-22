@@ -16,7 +16,7 @@ def main():
 
     commit_msg_path = sys.argv.__getitem__(4)
     out.write(commit_msg_path + "\n")
-    commit_msg_file = open(commit_msg_path, "a+")
+    commit_msg_file = open(commit_msg_path, "w+")
     commit_msg_file.seek(0)
     string = commit_msg_file.read()
     out.write(string)
