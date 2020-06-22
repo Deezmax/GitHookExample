@@ -5,8 +5,9 @@ PYTHONVERSION=$(python -V)
 case $PYTHONVERSION in
   Python*3.*)
   echo "$(python -V) is installed"
-  chmod +x .git/hooks/PythonScripts/prepare-commit-msg.py
-  python .git/hooks/PythonScripts/prepare-commit-msg.py "$1" "$2" "$3"
+  commit_msg_path="$(readlink -f "./COMMIT_EDITMSG")"
+  chmod +x .git/hooks/prepare-commit-msg.py
+  python .git/hooks/prepare-commit-msg.py "$1" "$2" "$3" "$commit_msg_path"
   result=$?
   ;;
   *)
