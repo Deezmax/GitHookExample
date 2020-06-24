@@ -1,0 +1,73 @@
+#!/bin/bash
+
+function installPylint() {
+  pip install pylint --upgrade
+  pylint --version
+  #  read -r -p "Are You Sure? [Y/n] " input < /bin/tty
+  #
+  #  case $input in
+  #  [yY][eE][sS] | [yY])
+  #    echo "Yes"
+  #    ;;
+  #  [nN][oO] | [nN])
+  #    echo "No"
+  #    ;;
+  #  *)
+  #    echo "Invalid input..."
+  #    exit 1
+  #    ;;
+  #  esac
+}
+
+function pylintError() {
+    case $1 in
+    1)
+      echo "FATAL MESSAGE ISSUED"
+      ;;
+    esac
+}
+
+if ! [[ $(where pylint) == *\pylint* ]]; then
+  pip install pylint --upgrade
+  pylint --version
+fi
+
+if ! [[ $(where pylint) == *\pylint* ]]; then
+  echo "Something went wrong"
+  exit 1
+fi
+
+echo "Validation python files now"
+
+STAGED_FILES=$(git diff --cached --name-only)
+if [ "$STAGED_FILES" == "" ]; then
+  echo "No files where staged"
+  exit 1
+fi
+echo "$STAGED_FILES"
+
+for FILE in $STAGED_FILES; do
+  if ! [[ $FILE == *.py ]]; then
+    echo "Skipped $FILE"
+    continue
+  fi
+
+  PYLINT_MESSAGE=$(pylint "$FILE")
+  echo "$PYLINT_MESSAGE"
+
+  if [[ $? == 0 ]]; then
+    echo "Passed: $FILE"
+  else
+    echo "Failed : $FILE"
+    PASS=false
+  fi
+done
+
+if ! $PASS; then
+  echo "LINT YOUR FILES!"
+else
+  echo "Success!"
+  exit 0
+fi
+
+exit 1
