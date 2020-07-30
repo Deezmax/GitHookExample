@@ -40,6 +40,8 @@ def main():
 
     code_result /= len(result)
 
+    sys.stdout.write("Overall code rating: %f" % code_result)
+
     if any([(res <= PYLINT_PASS_THRESHOLD) for res in result]):
         sys.stdout.write("git: commit failed, Pylint tests failed\n")
         sys.stdout.write("Every file needs to have a greater or equal "
