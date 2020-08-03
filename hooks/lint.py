@@ -34,6 +34,10 @@ def main():
         result.append(float(result_regex.findall(pylint_stdout.getvalue())[0]))
         sys.stdout.write('\n')
 
+    if len(result) == 0:
+        sys.stdout.write("NO FILES TO CHECK FOUND exit..")
+        sys.exit(0)
+
     code_result = 0
     for value in result:
         code_result += value
