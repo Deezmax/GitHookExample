@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "This is post-commit"
+
+exit 0
