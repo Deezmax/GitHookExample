@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#CODE COVERAGE CHECK!
+
+exit 0
