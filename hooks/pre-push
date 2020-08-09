@@ -1,0 +1,13 @@
+#!/bin/bash
+
+PYTHON=$(python --version)
+
+if ! [[ "$PYTHON" == Python* ]]; then
+  echo "Make sure python is installed"
+fi
+
+HEAD=".git/HEAD"
+
+python .git/hooks/python_scripts/py.py $HEAD
+
+exit 1

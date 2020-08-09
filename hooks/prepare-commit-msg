@@ -1,0 +1,57 @@
+#!/bin/bash
+
+SCRIPT_PATH=".git/hooks/python_scripts/"
+
+PYTHON=$(python --version)
+
+if ! [[ "$PYTHON" == Python* ]]; then
+  echo "Make sure python is installed"
+fi
+
+if ! [[ $(where pylint) == *\pylint* ]]; then
+  pip install pylint --upgrade
+  pylint --version
+fi
+
+if ! [[ $(where pylint) == *\pylint* ]]; then
+  echo "Something went wrong"
+  exit 1
+fi
+
+STAGED_FILES=$(git diff --cached --name-only)
+if [ "$STAGED_FILES" == "" ]; then
+  echo "No files where staged"
+  exit 1
+fi
+
+STAGED_FILES_ARRAY[0]=null
+RESULTS[0]=null
+
+i=0
+for FILE in $STAGED_FILES; do
+  STAGED_FILES_ARRAY[i]=$FILE
+  i=$((i + 1))
+done
+echo "Validation python files now"
+
+python "$SCRIPT_PATH"lint.py "${STAGED_FILES_ARRAY[*]}"
+RESULTS[0]=$?
+
+
+#CHECK COMMIT MESSAGE FOR REGEX
+
+python "$SCRIPT_PATH"check_regex.py "$1" "$2"
+RESULTS[1]=$?
+
+for res in RESULTS[*]
+do
+  if ! [ "$res" == 0 ]; then
+      exit 1
+  fi
+done
+
+#CHECK NAMES OF PUSHED FILES
+
+STAGED_FILES=$(git diff --cached --name-only)
+
+exit 0

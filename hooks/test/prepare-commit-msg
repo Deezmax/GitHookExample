@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "This is prepare-commit-msg"
+
+exit 0
