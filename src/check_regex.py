@@ -1,4 +1,4 @@
-"""A package to check a given word if it is in a certain format"""
+"""A module to check a given word if it is in a certain format"""
 import re
 import sys
 
