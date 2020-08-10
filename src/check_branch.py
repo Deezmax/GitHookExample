@@ -32,12 +32,13 @@ def main():
     message = message.split("heads/")[1]
 
     if len(message) == 0:
-        sys.stdout.write("\nEMPTY MESSAGE")
+        sys.stdout.write("\nEMPTY BRANCHNAME ?!")
         sys.exit(1)
 
     result = check_branch(message)
 
     if result is None:
+        sys.stdout.write("\nYour branch naming is invalid")
         sys.exit(1)
 
     sys.stdout.write("Your branch name was accepted\n")
