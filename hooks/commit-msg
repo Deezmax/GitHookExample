@@ -1,0 +1,25 @@
+#!/bin/bash
+
+SCRIPT_PATH=".git/hooks/python_scripts/"
+
+PYTHON=$(python --version)
+
+if ! [[ "$PYTHON" == Python* ]]; then
+  echo "Make sure python is installed"
+fi
+echo "Checking commit message now!"
+
+#CHECK COMMIT MESSAGE FOR REGEX
+
+RESULTS[0]=null
+
+python "$SCRIPT_PATH"check_regex.py "$1" "$2"
+RESULTS[0]=$?
+
+for res in "${RESULTS[@]}"; do
+  if ! [ "$res" == 0 ]; then
+    exit 1
+  fi
+done
+
+exit 0
