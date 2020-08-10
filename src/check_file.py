@@ -10,9 +10,9 @@ def check_filename(word):
     return res
 
 
-def main():
+def main(allfiles):
     """Main function that executes on start"""
-    files = sys.argv[1].split(" ")
+    files = allfiles.split(" ")
 
     sys.stdout.write("Checking these files for naming:")
     sys.stdout.write(str(files))
@@ -46,4 +46,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
