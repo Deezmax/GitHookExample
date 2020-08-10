@@ -19,7 +19,7 @@ def main(stagedfiles):
     errors = []
 
     for file in files:
-        if not file.endswith(".py") or not os.path.exists(file):
+        if not file.endswith(".py") or not os.path.exists(file) or file.find("__init__.py") >= 0:
             sys.stdout.write("\n Skipped file: %s" % file)
             continue
 
