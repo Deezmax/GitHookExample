@@ -40,7 +40,7 @@ def main():
         sys.stdout.write("line38")
         sys.exit(1)
 
-    sys.stdout.write("Your commit-message was accepted\n ")
+    sys.stdout.write("Your commit-message was accepted\n")
     sys.exit(0)
 
 
