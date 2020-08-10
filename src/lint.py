@@ -9,6 +9,7 @@ PYLINT_PASS_THRESHOLD = 9.5
 
 def main():
     """Main method that is called on startup"""
+    sys.stdout.write(sys.argv[1])
     files = sys.argv[1].split(" ")
 
     sys.stdout.write("STAGED FILES:")
@@ -16,6 +17,7 @@ def main():
     sys.stdout.write(str(files))
 
     result = []
+    errors = []
 
     for file in files:
         if not file.endswith(".py") or not os.path.exists(file):
@@ -30,13 +32,24 @@ def main():
             sys.stdout.write("\nFile %s has no warning or errors!" % file)
             sys.stdout.write('\n')
 
-        result_regex = re.compile(r"Your code has been rated at ([\d.]+)/10")
-        result.append(float(result_regex.findall(pylint_stdout.getvalue())[0]))
+        regex = re.compile(r"Your code has been rated at ([\d.]+)/10")
+
+        result_regex = regex.findall(pylint_stdout.getvalue())
         sys.stdout.write('\n')
 
-    if len(result) == 0:
+        if len(result_regex) <= 0:
+            errors.append(file)
+            continue
+
+        result.append(float(result_regex[0]))
+
+    if len(result) == 0 and len(errors) == 0:
         sys.stdout.write("NO FILES TO CHECK FOUND exit..")
         sys.exit(0)
+
+    if len(errors) > 0:
+        sys.stdout.write("Please fix all errors to process")
+        sys.exit(1)
 
     code_result = 0
     for value in result:
