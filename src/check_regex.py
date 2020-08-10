@@ -21,23 +21,19 @@ def main():
     """MAIN METHOD"""
 
     commit_msg_path = sys.argv.__getitem__(1)
-    sys.stdout.write(commit_msg_path)
     commit_msg_file = open(commit_msg_path, "r+")
     commit_msg_file.seek(0)
     message = commit_msg_file.read()
-    sys.stdout.write("\n"+message)
     commit_msg_file.seek(0)
     commit_msg_file.close()
 
     if len(message) == 0:
         sys.stdout.write("\nEMPTY MESSAGE")
-        sys.stdout.write("line33")
         sys.exit(1)
 
     result = check_commit(message)
 
     if result is None:
-        sys.stdout.write("line38")
         sys.exit(1)
 
     sys.stdout.write("Your commit-message was accepted\n")
