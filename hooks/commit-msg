@@ -16,7 +16,7 @@ RESULTS[0]=null
 python "$SCRIPT_PATH"check_regex.py "$1" "$2"
 RESULTS[0]=$?
 
-for res in RESULTS[*]; do
+for res in "${RESULTS[@]}"; do
   if ! [ "$res" == 0 ]; then
     exit 1
   fi
