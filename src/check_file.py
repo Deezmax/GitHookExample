@@ -5,7 +5,7 @@ import sys
 
 def check_filename(word):
     """Checks a given word w if its in filename format"""
-    result_regex = re.compile('[a-z]+(_[a-z]+)*.py$')
+    result_regex = re.compile('([a-z]+(_[a-z]+)*|__init__).py$')
     res = result_regex.match(word)
     return res
 
