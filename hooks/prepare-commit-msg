@@ -39,7 +39,10 @@ RESULTS[0]=$?
 printf "\n"
 
 #CHECK NAMES OF PUSHED FILES
-#TODO
+
+python "$SCRIPT_PATH"check_file.py "${STAGED_FILES_ARRAY[*]}"
+RESULTS[1]=$?
+printf "\n"
 
 for res in "${RESULTS[@]}"; do
   if ! [ "$res" == 0 ]; then
