@@ -39,6 +39,7 @@ RESULTS[0]=$?
 printf "\n"
 
 #CHECK NAMES OF PUSHED FILES
+#TODO
 
 for res in "${RESULTS[@]}"; do
   if ! [ "$res" == 0 ]; then
