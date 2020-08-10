@@ -13,7 +13,6 @@ def main():
     files = sys.argv[1].split(" ")
 
     sys.stdout.write("STAGED FILES:")
-    sys.stdout.write("STAGED FILES:")
     sys.stdout.write(str(files))
 
     result = []
