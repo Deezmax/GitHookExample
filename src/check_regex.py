@@ -11,10 +11,9 @@ def check_commit(word):
     return res
 
 
-def main():
+def main(commit_msg_path):
     """MAIN METHOD"""
 
-    commit_msg_path = sys.argv.__getitem__(1)
     commit_msg_file = open(commit_msg_path, "r+")
     commit_msg_file.seek(0)
     message = commit_msg_file.read()
@@ -35,4 +34,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv.__getitem__(1))
