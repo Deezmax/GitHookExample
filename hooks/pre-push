@@ -4,10 +4,19 @@ PYTHON=$(python --version)
 
 if ! [[ "$PYTHON" == Python* ]]; then
   echo "Make sure python is installed"
+  exit 1
 fi
 
+RESULTS[0]=null
 HEAD=".git/HEAD"
 
-python .git/hooks/python_scripts/py.py $HEAD
+python .git/hooks/python_scripts/check_branch.py $HEAD
+RESULTS[0]=$?
 
-exit 1
+for res in "${RESULTS[@]}"; do
+  if ! [ "$res" == 0 ]; then
+    exit 1
+  fi
+done
+
+exit 0

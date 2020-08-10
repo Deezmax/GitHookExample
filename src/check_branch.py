@@ -6,7 +6,7 @@ import sys
 def check_commit(word):
     """Checks a given word w if its in commit format"""
     result_regex = re.compile('(docs|feat|fix|refactor|style|test)'
-                              ':\\s([a-z]|[A-Z]|\\s|[0-9]|\\.)+?$')
+                              ':\\s([a-z]|[A-Z]|\\s|[0-9]|[\\W]|_)+?$')
     res = result_regex.match(word)
     return res
 
