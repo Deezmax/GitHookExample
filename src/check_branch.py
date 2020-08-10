@@ -3,14 +3,6 @@ import re
 import sys
 
 
-def check_commit(word):
-    """Checks a given word w if its in commit format"""
-    result_regex = re.compile('(docs|feat|fix|refactor|style|test)'
-                              ':\\s([a-z]|[A-Z]|\\s|[0-9]|[\\W]|_)+?$')
-    res = result_regex.match(word)
-    return res
-
-
 def check_branch(word):
     """Checks a given word w if its in branch format"""
     result_regex = re.compile('((feature|hotfixes|test|bug|refactor)/'
