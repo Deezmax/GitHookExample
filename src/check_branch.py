@@ -14,12 +14,12 @@ def check_branch(word):
 def main(path):
     """MAIN METHOD"""
 
-    commit_msg_path = path
-    commit_msg_file = open(commit_msg_path, "r+")
-    commit_msg_file.seek(0)
-    message = commit_msg_file.read()
-    commit_msg_file.seek(0)
-    commit_msg_file.close()
+    path = path
+    current_branch = open(path, "r+")
+    current_branch.seek(0)
+    message = current_branch.read()
+    current_branch.seek(0)
+    current_branch.close()
 
     message = message.split("heads/")[1]
 
