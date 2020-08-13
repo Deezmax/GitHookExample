@@ -7,10 +7,10 @@ from pylint import epylint as lint
 PYLINT_PASS_THRESHOLD = 9.5
 
 
-def main():
+def main(stagedfiles):
     """Main method that is called on startup"""
-    sys.stdout.write(sys.argv[1])
-    files = sys.argv[1].split(" ")
+    sys.stdout.write(stagedfiles)
+    files = stagedfiles.split(" ")
 
     sys.stdout.write("STAGED FILES:")
     sys.stdout.write(str(files))
@@ -19,7 +19,7 @@ def main():
     errors = []
 
     for file in files:
-        if not file.endswith(".py") or not os.path.exists(file):
+        if not file.endswith(".py") or not os.path.exists(file) or file.find("__init__.py") >= 0:
             sys.stdout.write("\n Skipped file: %s" % file)
             continue
 
@@ -68,4 +68,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])

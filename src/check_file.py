@@ -5,14 +5,14 @@ import sys
 
 def check_filename(word):
     """Checks a given word w if its in filename format"""
-    result_regex = re.compile('[a-z]+(_[a-z]+)*.py$')
+    result_regex = re.compile('([a-z]+(_[a-z]+)*|__init__).py$')
     res = result_regex.match(word)
     return res
 
 
-def main():
+def main(allfiles):
     """Main function that executes on start"""
-    files = sys.argv[1].split(" ")
+    files = allfiles.split(" ")
 
     sys.stdout.write("Checking these files for naming:")
     sys.stdout.write(str(files))
@@ -46,4 +46,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
