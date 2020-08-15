@@ -6,6 +6,7 @@ PYTHON=$(python --version)
 
 if ! [[ "$PYTHON" == Python* ]]; then
   echo "Make sure python is installed"
+  exit 1
 fi
 
 if ! [[ $(where pylint) == *\pylint* ]]; then
