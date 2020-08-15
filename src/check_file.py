@@ -20,23 +20,24 @@ def main(allfiles):
     errors = []
 
     for file in files:
-
         if not file.endswith(".py"):
-            sys.stdout.write("\n Skipped file: %s" % file)
-            continue
+            if file.find(" "):
+                sys.stdout.write("\nThe file %s contains whitespace! Remove it" % file)
+            else:
+                sys.stdout.write("\nFile %s contains no whitespaces: " % file)
+        else:
+            split = file.rsplit("/")
+            if len(split) < 0:
+                sys.stderr.write("\nBIG FAT ERROR")
+                sys.exit(1)
 
-        split = file.rsplit("/")
-        if len(split) < 0:
-            sys.stderr.write("\nBIG FAT ERROR")
-            sys.exit(1)
+            word = split[len(split) - 1]
 
-        word = split[len(split) - 1]
+            result = check_filename(word)
 
-        result = check_filename(word)
-
-        if result is None:
-            sys.stdout.write("\n" + file + " is in wrong format!")
-            errors.append(file)
+            if result is None:
+                sys.stdout.write("\n" + file + " is in wrong format!")
+                errors.append(file)
 
     if len(errors) > 0:
         sys.stdout.write("\nRename your files and try again.")
