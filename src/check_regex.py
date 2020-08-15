@@ -1,6 +1,7 @@
 """A module to check a given word if it is in a certain format"""
 import re
 import sys
+import os
 
 
 def check_commit(word):
@@ -14,6 +15,9 @@ def check_commit(word):
 def main(commit_msg_path):
     """MAIN METHOD"""
 
+    if not os.path.exists(commit_msg_path):
+        sys.stdout.write("Path %s not found." % commit_msg_path)
+        exit(1)
     commit_msg_file = open(commit_msg_path, "r+")
     commit_msg_file.seek(0)
     message = commit_msg_file.read()
