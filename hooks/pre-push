@@ -4,6 +4,16 @@ SCRIPT_PATH=".git/hooks/python_scripts/"
 
 PYTHON=$(python --version)
 
+if ! [[ $(coverage --version) == *Coverage.py* ]]; then
+  pip install coverage
+  coverage --version
+fi
+
+if ! [[ $(coverage --version) == *Coverage.py* ]]; then
+  echo "Something went wrong"
+  exit 1
+fi
+
 if ! [[ "$PYTHON" == Python* ]]; then
   echo "Make sure python is installed"
   exit 1
@@ -15,6 +25,12 @@ HEAD=".git/HEAD"
 python "$SCRIPT_PATH"check_branch.py $HEAD
 RESULTS[0]=$?
 printf "\n"
+
+coverage run -m unittest discover
+REPORT=$(coverage report)
+
+python "$SCRIPT_PATH"coverage.py "$REPORT"
+RESULTS[1]=$?
 
 for res in "${RESULTS[@]}"; do
   if ! [ "$res" == 0 ]; then
