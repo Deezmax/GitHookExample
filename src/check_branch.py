@@ -7,7 +7,7 @@ import os
 def check_branch(word):
     """Checks a given word w if its in branch format"""
     result_regex = re.compile('((feature|hotfix|test|bug|refactor)/'
-                              '([a-z]|[A-Z]|[0-9])+|master|develop|release)$')
+                              '([a-z]|[A-Z]|[0-9]|-)+|master|develop|release)$')
     res = result_regex.match(word)
     return res
 
