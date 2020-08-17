@@ -1,6 +1,7 @@
 """A module to check a given word if it is in a certain format"""
 import re
 import sys
+import os
 
 
 def check_branch(word):
@@ -14,7 +15,10 @@ def check_branch(word):
 def main(path):
     """MAIN METHOD"""
 
-    path = path
+    if not os.path.exists(path):
+        sys.stdout.write("Path %s to HEAD file not found")
+        sys.exit(1)
+
     current_branch = open(path, "r+")
     current_branch.seek(0)
     message = current_branch.read()
