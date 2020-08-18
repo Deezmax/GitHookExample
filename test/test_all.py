@@ -6,6 +6,7 @@ from src import check_branch
 from src import check_regex
 from src import check_file
 from src import lint
+from src import coverage
 
 
 def create_file(path, message):
@@ -114,6 +115,49 @@ class MyTestCase(unittest.TestCase):
 
         with self.assertRaises(SystemExit) as sys_exit:
             lint.main(files)
+            self.assertEqual(sys_exit.exception.code, 0)
+
+    def test_coverage(self):
+        """Tests coverage regex"""
+
+        report_0 = r"Name                        Stmts   Miss  Cover" \
+                   r"-----------------------------------------------" \
+                   r"src\__init__.py                 0      0   100%" \
+                   r"src\check_branch.py            28      5    82%" \
+                   r"src\check_file.py              31      6    81%" \
+                   r"src\check_file.py              31      6    81%" \
+                   r"src\check_regex.py             26      5    81%" \
+                   r"src\coverage.py                19     19     0%" \
+                   r"src\lint.py                    47     11    77%" \
+                   r"src\lint.py                    47     11    77%" \
+                   r"src\prepare_commit_msg.py      24     24     0%" \
+                   r"test\__init__.py                0      0   100%" \
+                   r"test\test_all.py               83     16    81%" \
+                   r"-----------------------------------------------" \
+                   r"TOTAL                         258     86    67%"
+
+        report_1 = r"Name                        Stmts   Miss  Cover" \
+                   r"-----------------------------------------------" \
+                   r"src\__init__.py                 0      0   100%" \
+                   r"src\check_branch.py            28      5    82%" \
+                   r"src\check_file.py              31      6    81%" \
+                   r"src\check_file.py              31      6    81%" \
+                   r"src\check_regex.py             26      5    81%" \
+                   r"src\coverage.py                19     19     0%" \
+                   r"src\lint.py                    47     11    77%" \
+                   r"src\lint.py                    47     11    77%" \
+                   r"src\prepare_commit_msg.py      24     24     0%" \
+                   r"test\__init__.py                0      0   100%" \
+                   r"test\test_all.py               83     16    81%" \
+                   r"-----------------------------------------------" \
+                   r"TOTAL                         258     86    86%"
+
+        with self.assertRaises(SystemExit) as sys_exit:
+            coverage.main(report_0)
+            self.assertEqual(sys_exit.exception.code, 1)
+
+        with self.assertRaises(SystemExit) as sys_exit:
+            coverage.main(report_1)
             self.assertEqual(sys_exit.exception.code, 0)
 
     if __name__ == '__main__':
