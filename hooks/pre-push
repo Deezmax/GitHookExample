@@ -31,13 +31,14 @@ if ! [ "$RESULT" == 0 ]; then
   exit 1
 fi
 
-coverage run -m unittest discover
+coverage run --source=. -m unittest discover
 REPORT=$(coverage report)
 
 python "$SCRIPT_PATH"coverage.py "$REPORT"
 RESULT=$?
 
 if ! [ "$RESULT" == 0 ]; then
+  printf "\n"
   echo "Exiting Hook"
   printf "\n"
   exit 1
