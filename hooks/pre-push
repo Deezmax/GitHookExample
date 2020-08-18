@@ -19,23 +19,28 @@ if ! [[ "$PYTHON" == Python* ]]; then
   exit 1
 fi
 
-RESULTS[0]=null
 HEAD=".git/HEAD"
 
 python "$SCRIPT_PATH"check_branch.py $HEAD
-RESULTS[0]=$?
+RESULT=$?
 printf "\n"
+
+if ! [ "$RESULT" == 0 ]; then
+  echo "Exiting Hook"
+  printf "\n"
+  exit 1
+fi
 
 coverage run -m unittest discover
 REPORT=$(coverage report)
 
 python "$SCRIPT_PATH"coverage.py "$REPORT"
-RESULTS[1]=$?
+RESULT=$?
 
-for res in "${RESULTS[@]}"; do
-  if ! [ "$res" == 0 ]; then
-    exit 1
-  fi
-done
+if ! [ "$RESULT" == 0 ]; then
+  echo "Exiting Hook"
+  printf "\n"
+  exit 1
+fi
 
 exit 0
